@@ -1,0 +1,5 @@
+.department {
+    stroke: black;
+    cursor: pointer;
+    fill: rgb(107,174,214);
+}
