@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Département Détails</title>
+        <% include stylesheets %>
+        <link rel="stylesheet" href="/assets/css/formation.css"/>
+    </head>
+    <body>
+        <% include header %>
+        <main recordId="<%= formation2017.recordid%>" class="container">
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-title">Etablissement : <%=formation2017.fields.g_ea_lib_vx %></p>
+                    <p>Région: <%=formation2017.fields.lib_reg%></p>
+                    <p>Département: <%=formation2017.fields.lib_dep%> (<%=formation2017.fields.dep %>)</p>
+                    <p>Formation: <%=formation2017.fields.fil_lib_voe_acc%></p>
+                    <table id="stats-table" class="table table-striped table-bordered table-sm">
+                        <tbody>
+                            <tr>
+                                <th class="th-sm">Nombre total de candidature</th>
+                                <td><%= formation2017.fields.voe_tot%></td>
+                            </tr>
+                            <tr>
+                                <th class="th-sm">Dernier candidat appelé</th>
+                                <td><%= formation2017.fields.rang_der_max%></td>
+                            </tr>
+                            <tr>
+                                <th class="th-sm">Nombre de désistement</th>
+                                <td><%= formation2017.fields.rang_der_max - formation2017.fields.capa_fin%></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center chart-row">
+                        <div class="col-sm">
+                            <p class="font-italic">Partité des admis</p>
+                            <div class="chart" id="parity-chart"></div>
+                        </div>
+                        <div class="col-sm">
+                            <p class="font-italic">Pourcentage de boursiers admis</p>
+                            <div class="chart"id="bourse-chart"></div>
+                        </div>
+                    </div>
+                    <div class="row text-center chart-row">
+                        <div class="col-sm">
+                            <p class="font-italic">Pourcentage des admis en fonction des mentions au bac</p>
+                            <div class="chart" id="mentions-chart"></div>
+                        </div>
+                        <div class="col-sm">
+                            <p class="font-italic">Répartition des candidatures on fonction de la position du voeux</p>
+                            <div class="chart" id="numberOne-chart"></div>
+                        </div>
+                    </div>
+                    <div class="row text-center chart-row">
+                        <div class="col-sm">
+                            <p class="font-italic">Répartition des admis on fonction de la position du voeux</p>
+                            <div class="chart" id="numberOne-adm-chart"></div>
+                        </div>
+                    </div>
+
+                </div>
+              </div>
+        </main>
+        <% include scripts %>
+        <script src="/assets/js/formation.js"></script>
+    </body>
+</html>

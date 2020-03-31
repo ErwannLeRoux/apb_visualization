@@ -1,41 +1,44 @@
 <!doctype html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>Département Détails</title>
-        <% include stylesheets %>
-        <link rel="stylesheet" href="/assets/css/detail.css"/>
-    </head>
-    <body>
-        <% include header %>
-        <main class="container">
 
-            <div class="card">
-                <div class="card-header">
-                    <p class="card-title">Etablissement : <%=formations[0].fields.g_ea_lib_vx %></p>
-                    <p>Région: <%=formations[0].fields.lib_reg%></p>
-                    <p>Département: <%=formations[0].fields.lib_dep%> (<%=formations[0].fields.dep %>)</p>
-                    <p>Nombre de place total: <%=total_cap %> places</p>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Formations proposées:</h5>
-                  <p class="card-text">Voici la liste des formations proposées pour <b>"<%=formations[0].fields.g_ea_lib_vx %></b>", pour chaque formation est précisé 
-                  le nombre de place qui lui est alloué au sein de l'établissement/institution académique.</p>
-                  <div class="list-group">
-                    <% formations.forEach(function(formation){ %>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <%=formation.fields.fil_lib_voe_acc %> (<%=formations_cap[formation.recordid]%> places)
-                    
-                        <div class="progress" style="height: 1em;">
-                            <div class="progress-bar" role="progressbar" style="width:<%=formations_cap[formation.recordid]*100/total_cap%>%;" aria-valuenow="<%=formations_cap[formation.recordid]%>" aria-valuemin="0" aria-valuemax="<%=total_cap%>">
-                            </div>
-                        </div>
-                    </a>
-                    <% }); %>
-                  </div>
-                </div>
-              </div>
-        </main>
-        <script src="assets/js/detail.js"></script>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>Département Détails</title>
+    <% include stylesheets %>
+    <link rel="stylesheet" href="/assets/css/schools.css" />
+</head>
+
+<body>
+    <% include header %>
+    <main class="container">
+        <table id="schools_table" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="th-sm">Établissement
+
+                    </th>
+                    <th class="th-sm">Région
+
+                    </th>
+                    <th class="th-sm">Département
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <% datas.forEach(function(data){ %>
+                <tr>
+                    <td> <a href="/schools/<%=data._id.cod_uai%>"><%=data._id.name%> </a></td>
+                    <td><%=data._id.lib_reg%></td>
+                    <td><%=data._id.lib_dep%></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </main>
+    <% include scripts %>
+    <script src="/assets/js/schools.js"></script>
+</body>
+
 </html>

@@ -32,37 +32,77 @@ async function main() {
 
     // app routing
     router.get('/', (request, response) => {
-
         response.render("index")
     });
-
 
     // app routing
-    router.get('/', (request, response) => {
-
-        response.render("index")
+    router.get('/departments', (request, response) => {
+        response.render("departments")
     });
 
+    router.get('/schools', async (request, response) => {
+        let datas = await Document.aggregate(
+            [{
+                "$group": {
+                    "_id": {
+                        cod_uai : "$fields.cod_uai",
+                        name : "$fields.g_ea_lib_vx",
+                        lib_dep : "$fields.lib_dep",
+                        lib_reg : "$fields.lib_reg",
+                        dep : "$fields.dep",
+                        annee : "$fields.session",
+                    }
+                }
+            }]
+        );
 
-    router.get('/department/:dep_id', (request, response) => {
+
+        let filter = datas.filter((item)=>{
+            return item._id.annee === "2017"
+        })
+
+        response.render("schools", {"datas" : filter})
+    });
+
+    router.get('/formation_data/:recordId', async (request, response) => {
+        let recordId = request.params.recordId;
+        let formation = await Document.find({"recordid": recordId, "fields.session" : "2017"})
+
+        response.send({result: formation[0]})
+    });
+
+    router.get('/departments/:dep_id', (request, response) => {
         const id = request.params.id;
         console.log(id)
         response.render("departments")
     });
 
     router.get('/schools/:uai', async (request, response) => {
-        let  code_uai = request.params.uai;
-        let formations = await Document.find({"fields.cod_uai":code_uai, "fields.session" : "2017"})
-        let total_cap = 0
-        let formations_cap = []
-        formations.forEach((formation)=>{
-            let cap = parseInt(formation.fields.capa_fin)
-            if(cap != "inconnu" ){
-                total_cap += cap
-                formations_cap[formation.recordid] = cap
-            }
-        });
-        response.render("schools", {"formations" : formations, "total_cap": total_cap, "formations_cap": formations_cap})
+       let  code_uai = request.params.uai;
+       let formations = await Document.find({"fields.cod_uai":code_uai, "fields.session" : "2017"})
+       let total_cap = 0
+       let formations_cap = []
+       formations.forEach((formation)=>{
+           let cap = formation.fields.capa_fin
+           if(cap != "inconnu" ){
+               total_cap += parseInt(cap)
+               formations_cap[formation.recordid] = parseInt(cap)
+           }else{
+               formations_cap[formation.recordid] = cap
+           }
+       });
+       response.render("school", {"formations" : formations, "total_cap": total_cap, "formations_cap": formations_cap})
+   });
+
+    router.get('/schools/:uai/:recordid', async (request, response) => {
+        let code_uai = request.params.uai;
+        let recordId = request.params.recordid
+
+        let formation2017 = await Document.find({ "recordid": recordId })
+        let formation_lib = formation2017[0].fields.fil_lib_voe_acc
+        let formation2016 = await Document.find({"fields.cod_uai":code_uai, "fields.session" : "2016", "fields.fil_lib_voe_acc" : formation_lib})
+
+        response.render("formation", {"formation2016" : formation2016[0], "formation2017": formation2017[0]})
     });
 
     router.get('/department_data', async (request, response) => {

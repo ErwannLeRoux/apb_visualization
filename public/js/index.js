@@ -79,7 +79,7 @@ $(document).ready(function() {
                 .attr("class", function(d) {return "department q" + quantile(+obj.value) + "-9"; })
                 .on("click", function(d) {
                     console.log(d)
-                    window.location.href = "department/"+obj.dep
+                    window.location.href = "departments/"+obj.dep
                 })
                 .on("mouseover", function(d) {
                     div.transition()
