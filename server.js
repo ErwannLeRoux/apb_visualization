@@ -73,8 +73,8 @@ async function main() {
 
     router.get('/departments/:dep_id', (request, response) => {
         const id = request.params.id;
-        console.log(id)
-        response.render("departments")
+
+        response.render("department")
     });
 
     router.get('/schools/:uai', async (request, response) => {

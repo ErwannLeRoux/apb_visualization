@@ -78,8 +78,7 @@ $(document).ready(function() {
             d3.select("#d" + obj.dep)
                 .attr("class", function(d) {return "department q" + quantile(+obj.value) + "-9"; })
                 .on("click", function(d) {
-                    console.log(d)
-                    window.location.href = "departments/"+obj.dep
+                    window.location.href = obj.dep
                 })
                 .on("mouseover", function(d) {
                     div.transition()
