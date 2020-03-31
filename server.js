@@ -50,6 +50,21 @@ async function main() {
         response.render("departments")
     });
 
+    router.get('/schools/:uai', async (request, response) => {
+        let  code_uai = request.params.uai;
+        let formations = await Document.find({"fields.cod_uai":code_uai, "fields.session" : "2017"})
+        let total_cap = 0
+        let formations_cap = []
+        formations.forEach((formation)=>{
+            let cap = parseInt(formation.fields.capa_fin)
+            if(cap != "inconnu" ){
+                total_cap += cap
+                formations_cap[formation.recordid] = cap
+            }
+        });
+        response.render("schools", {"formations" : formations, "total_cap": total_cap, "formations_cap": formations_cap})
+    });
+
     router.get('/department_data', async (request, response) => {
         let results = await Document.find()
         let depMap = new Map()
