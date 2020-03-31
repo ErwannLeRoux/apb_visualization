@@ -1,5 +1,38 @@
 .department {
     stroke: black;
     cursor: pointer;
+    fill: white;
+    stroke-width: .5px;
+}
+
+.department:hover {
+    stroke: black;
+    cursor: pointer;
     fill: rgb(107,174,214);
+    stroke-width: 2px;
+}
+
+.q0-9 { fill: #d4e6f1;}
+.q1-9 { fill:  #a9cce3;}
+.q2-9 { fill: #7fb3d5;}
+.q3-9 { fill: #5499c7;}
+.q4-9 { fill:  #2980b9;}
+.q5-9 { fill: #2471a3;}
+.q6-9 { fill: #1f618d;}
+.q7-9 { fill:  #1a5276;}
+.q8-9 { fill:  #154360;}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    color: black;
+    padding: 10px;
+    background: #2980b9;
+    border: 1px solid black;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+#d2A, #d2B {
+    fill: lightgrey;
 }

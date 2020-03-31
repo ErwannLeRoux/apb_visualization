@@ -14,7 +14,8 @@ async function main() {
     db.on('error', console.error.bind(console, 'connection error:'));
 
     db.once('open', async function() {
-       documents = await Document.find({ "fields.capa_fin" :"Métiers du géomètre-topographe et de la modélisation numérique"})
+       documents = await Document.find({ "fields.dep" :"27"})
+
     });
 
     let router = express.Router();
@@ -31,8 +32,49 @@ async function main() {
 
     // app routing
     router.get('/', (request, response) => {
-        console.log(documents)
+
         response.render("index")
+    });
+
+
+    // app routing
+    router.get('/', (request, response) => {
+
+        response.render("index")
+    });
+
+
+    router.get('/department/:dep_id', (request, response) => {
+        const id = request.params.id;
+        console.log(id)
+        response.render("departments")
+    });
+
+    router.get('/department_data', async (request, response) => {
+        let results = await Document.find()
+        let depMap = new Map()
+
+        results.forEach((item) => {
+            let acc = parseInt(item.fields.capa_fin)
+            if(acc) {
+                let exists = depMap.has(item.fields.dep)
+                if(!exists) {
+                    depMap.set(item.fields.dep, acc);
+                } else {
+                    depMap.set(item.fields.dep, acc + depMap.get(item.fields.dep));
+                }
+            }
+        });
+
+        let objs = []
+        depMap.forEach(function(value, key){
+            obj = {}
+            key < 10 ? key = "0"+key : key = key
+            obj.dep = key
+            obj.value = value
+            objs.push(obj)
+        });
+        response.send({result: objs})
     });
 
     app.use('/', router)
