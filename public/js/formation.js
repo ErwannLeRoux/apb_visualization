@@ -298,8 +298,8 @@ $(document).ready(function() {
         }
 
     function buildNumberOneChart(d) {
-        let candidature_tot = d.fields.acc_tot
-        let number_one_tot = d.fields.acc_voe1
+        let candidature_tot = d.fields.voe_tot
+        let number_one_tot = d.fields.voe1
 
         let prop_one = Math.round(number_one_tot / candidature_tot * 100)
         let prop_other = Math.round(100 - prop_one)
@@ -390,9 +390,9 @@ $(document).ready(function() {
         }
 
     function buildNumberOneAdmChart(d) {
-
-        let adm_tot = d.fields.prop_tot
-        let number_one_tot = d.fields.voe1
+        console.log(d)
+        let adm_tot = d.fields.acc_tot
+        let number_one_tot = d.fields.acc_voe1
 
         let prop_one = Math.round(number_one_tot / adm_tot * 100)
         let prop_other = Math.round(100 - prop_one)

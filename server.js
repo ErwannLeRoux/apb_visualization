@@ -8,14 +8,36 @@ const Document = require('./models/document.js')
 async function main() {
     let db = mongoose.connection;
     let documents = []
+    let mapObjs = []
 
     mongoose.connect('mongodb://127.0.0.1:27017/apb', {useNewUrlParser: true, useUnifiedTopology: true});
 
     db.on('error', console.error.bind(console, 'connection error:'));
 
     db.once('open', async function() {
-       documents = await Document.find({ "fields.dep" :"27"})
+        let results = await Document.find()
+        let depMap = new Map()
 
+        results.forEach((item) => {
+            let acc = parseInt(item.fields.capa_fin)
+            if(acc) {
+                let exists = depMap.has(item.fields.dep)
+                if(!exists) {
+                    depMap.set(item.fields.dep, acc);
+                } else {
+                    depMap.set(item.fields.dep, acc + depMap.get(item.fields.dep));
+                }
+            }
+        });
+
+        depMap.forEach(function(value, key){
+            obj = {}
+            key < 10 ? key = "0"+key : key = key
+            obj.dep = key
+            obj.value = value
+            mapObjs.push(obj)
+        });
+        console.log("Map data loaded")
     });
 
     let router = express.Router();
@@ -106,30 +128,7 @@ async function main() {
     });
 
     router.get('/department_data', async (request, response) => {
-        let results = await Document.find()
-        let depMap = new Map()
-
-        results.forEach((item) => {
-            let acc = parseInt(item.fields.capa_fin)
-            if(acc) {
-                let exists = depMap.has(item.fields.dep)
-                if(!exists) {
-                    depMap.set(item.fields.dep, acc);
-                } else {
-                    depMap.set(item.fields.dep, acc + depMap.get(item.fields.dep));
-                }
-            }
-        });
-
-        let objs = []
-        depMap.forEach(function(value, key){
-            obj = {}
-            key < 10 ? key = "0"+key : key = key
-            obj.dep = key
-            obj.value = value
-            objs.push(obj)
-        });
-        response.send({result: objs})
+        response.send({result: mapObjs})
     });
 
     app.use('/', router)

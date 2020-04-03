@@ -1,0 +1,11 @@
+body, html {
+    height: 100%;
+}
+
+main {
+    height: 90%;
+}
+
+main img {
+    margin-top: 5em;
+}

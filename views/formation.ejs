@@ -25,10 +25,12 @@
                                 <th class="th-sm">Dernier candidat appelé</th>
                                 <td><%= formation2017.fields.rang_der_max%></td>
                             </tr>
-                            <tr>
-                                <th class="th-sm">Nombre de désistement</th>
-                                <td><%= formation2017.fields.rang_der_max - formation2017.fields.capa_fin%></td>
-                            </tr>
+                            <% if (formation2017.fields.rang_der_max - formation2017.fields.capa_fin >= 0) { %>
+                                <tr>
+                                    <th class="th-sm">Nombre de désistement</th>
+                                    <td><%= formation2017.fields.rang_der_max - formation2017.fields.capa_fin%></td>
+                                </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
@@ -59,7 +61,6 @@
                             <div class="chart" id="numberOne-adm-chart"></div>
                         </div>
                     </div>
-
                 </div>
               </div>
         </main>
