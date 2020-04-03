@@ -62,6 +62,10 @@ async function main() {
         response.render("departments")
     });
 
+    router.get('/formations', (request, response) => {
+
+    })
+
     router.get('/schools', async (request, response) => {
         let datas = await Document.aggregate(
             [{
@@ -83,7 +87,7 @@ async function main() {
             return item._id.annee === "2017"
         })
 
-        response.render("schools", {"datas" : filter})
+        response.render("schools", {"datas" : filter, bool_dep: false})
     });
 
     router.get('/formation_data/:recordId', async (request, response) => {
@@ -94,9 +98,28 @@ async function main() {
     });
 
     router.get('/departments/:dep_id', (request, response) => {
-        const id = request.params.id;
+        const id = request.params.dep_id;
+        let datas = await Document.aggregate(
+            [{
+                "$group": {
+                    "_id": {
+                        cod_uai : "$fields.cod_uai",
+                        name : "$fields.g_ea_lib_vx",
+                        lib_dep : "$fields.lib_dep",
+                        lib_reg : "$fields.lib_reg",
+                        dep : "$fields.dep",
+                        annee : "$fields.session",
+                    }
+                }
+            }]
+        );
 
-        response.render("department")
+
+        let filter = datas.filter((item)=>{
+            return item._id.annee === "2017" && item._id.dep === id
+        })
+
+        response.render("schools", {"datas" : filter, bool_dep: true})
     });
 
     router.get('/schools/:uai', async (request, response) => {
