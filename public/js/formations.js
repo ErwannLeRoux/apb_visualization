@@ -1,5 +1,10 @@
 $(document).ready(function () {
+
     $('#schools_table').DataTable({
+        "initComplete": function(settings, json) {
+            $("#schools_table").show()
+            $("#loader").hide()
+        },
         "lengthMenu": [[25, 50, 75], [25, 50, 75]],
         "language": {
             "lengthMenu": " _MENU_ résultats par page",
