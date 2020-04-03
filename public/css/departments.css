@@ -1,3 +1,7 @@
+#map {
+    margin-top: 6em;
+}
+
 .department {
     stroke: black;
     cursor: pointer;

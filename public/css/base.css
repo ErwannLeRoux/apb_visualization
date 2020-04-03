@@ -3,9 +3,29 @@ body, html {
 }
 
 main {
-    height: 90%;
+    margin-top: 2em;
+    margin-bottom: 5em;
 }
 
 main img {
     margin-top: 5em;
+}
+
+footer {
+    color: white;
+    background-color: #1a78c2;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+
+}
+
+header {
+    color: white;
+    background-color: #1a78c2;
 }

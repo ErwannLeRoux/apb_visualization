@@ -9,6 +9,7 @@ async function main() {
     let db = mongoose.connection;
     let documents = []
     let mapObjs = []
+    let allDocumentsCache = []
 
     mongoose.connect('mongodb://127.0.0.1:27017/apb', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -62,8 +63,21 @@ async function main() {
         response.render("departments")
     });
 
-    router.get('/formations', (request, response) => {
+    router.get('/formations', async (request, response) => {
+        let formations = []
+        if(allDocumentsCache.length === 0) {
+            formations = await Document.find({})
+            allDocumentsCache = formations
+        } else {
+            formations = allDocumentsCache
+            console.log("Loading from cache")
+        }
 
+        let filter = formations.filter((item)=>{
+            return item.fields.session === "2017"
+        })
+
+        response.render("formations", {"datas" : filter, bool_dep: true})
     })
 
     router.get('/schools', async (request, response) => {
@@ -97,7 +111,7 @@ async function main() {
         response.send({result: formation[0]})
     });
 
-    router.get('/departments/:dep_id', (request, response) => {
+    router.get('/departments/:dep_id', async (request, response) => {
         const id = request.params.dep_id;
         let datas = await Document.aggregate(
             [{

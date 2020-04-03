@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Département Détails</title>
     <% include stylesheets %>
-    <link rel="stylesheet" href="/assets/css/schools.css" />
+    <link rel="stylesheet" href="/assets/css/formations.css" />
 </head>
 
 <body>
@@ -14,7 +14,13 @@
         <table id="schools_table" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <th class="th-sm">Établissement
+                    <th class="th-sm">Cursus
+
+                    </th>
+                    <th class="th-sm">Nom Filière
+
+                    </th>
+                    <th class="th-sm">Etablissement
 
                     </th>
                     <th class="th-sm">Région
@@ -29,9 +35,13 @@
 
                 <% datas.forEach(function(data){ %>
                 <tr>
-                    <td> <a href="/schools/<%=data._id.cod_uai%>"><%=data._id.name%> </a></td>
-                    <td><%=data._id.lib_reg%></td>
-                    <td><%=data._id.lib_dep%></td>
+
+                    <td><%=data.fields.fili%></td>
+                    <td> <a href="/schools/<%=data.fields.cod_uai%>/<%=data.recordid%>"><%=data.fields.fil_lib_voe_acc%> </a></td>
+                    <td> <a href="/schools/<%=data.fields.cod_uai%>"><%=data.fields.g_ea_lib_vx%> </a></td>
+                    <td><%=data.fields.lib_reg%></td>
+
+                    <td> <a href="/departments/<%=data.fields.dep%>"><%=data.fields.lib_dep%></a></td>
                 </tr>
                 <% }); %>
             </tbody>
@@ -39,7 +49,7 @@
     </main>
     <% include footer %>
     <% include scripts %>
-    <script src="/assets/js/schools.js"></script>
+    <script src="/assets/js/formations.js"></script>
 </body>
 
 </html>
