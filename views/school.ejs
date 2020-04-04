@@ -11,21 +11,16 @@
         <main class="container">
 
             <div class="card">
-                <div class="card-header" id="info-box">
-                <ul>
-                    <li><span class="info-lib">Établissement : </span><%=formations[0].fields.g_ea_lib_vx %></li>
-                    <li><span class="info-lib">Région : </span><%=formations[0].fields.lib_reg%></li>
-                    <li><span class="info-lib">Département : </span><%=formations[0].fields.lib_dep%> (<%=formations[0].fields.dep %>)</li>
-                    <li><span class="info-lib">Nombre de places total : </span>
+                <div class="card-header">
+                    <p><span class="info-lib">Établissement : </span><%=formations[0].fields.g_ea_lib_vx %></p>
+                    <p><span class="info-lib">Région : </span><%=formations[0].fields.lib_reg%></p>
+                    <p><span class="info-lib">Département : </span><%=formations[0].fields.lib_dep%> (<%=formations[0].fields.dep %>)</p>
+                    <p><span class="info-lib">Nombre de places total : </span>
                         <%if (total_cap == 0) { %>
                             nombre de places inconnu
                         <% }else{ %>
                             <%=total_cap %> places
-                        <%} %>
-                    </li>
-
-
-                </ul>
+                        <%} %></p>
                 </div>
                 <div class="card-body" id="formation-list">
                   <h5 class="card-title">Formations proposées:</h5>

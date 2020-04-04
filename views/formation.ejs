@@ -9,13 +9,13 @@
     <body>
         <% include header %>
         <main recordId="<%= formation2017.recordid%>" class="container">
-            
+
             <div class="card">
                 <div class="card-header">
-                    <p class="card-title">Etablissement : <%=formation2017.fields.g_ea_lib_vx %></p>
-                    <p>Région: <%=formation2017.fields.lib_reg%></p>
-                    <p>Département: <%=formation2017.fields.lib_dep%> (<%=formation2017.fields.dep %>)</p>
-                    <p>Formation: <%=formation2017.fields.fil_lib_voe_acc%></p>
+                    <p class="card-title"><span class="info-lib">Etablissement :</span> <%=formation2017.fields.g_ea_lib_vx %></p>
+                    <p><span class="info-lib">Région:</span> <%=formation2017.fields.lib_reg%></p>
+                    <p><span class="info-lib">Département:</span> <%=formation2017.fields.lib_dep%> (<%=formation2017.fields.dep %>)</p>
+                    <p><span class="info-lib">Formation:</span> <%=formation2017.fields.fil_lib_voe_acc%></p>
 
                     <table id="stats-table" class="table table-striped table-bordered table-sm">
                         <tbody>
